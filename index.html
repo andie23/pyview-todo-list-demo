@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>TODO List</title>
+        <style>
+            #main {
+                width: 50%;
+                margin: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <h1>TODO APP</h1>
+            <input type="text" id="todo_item" placeholder="Enter something"/>
+            <button onclick="addTextItem()">Add</button>
+            <ul id="list">
+                <li id="item" style="visibility:hidden"></li>
+            </ul>
+            <div id="save-container" style="display:none">
+                <button onclick="saveToFile()">Save</button>
+            </div>
+        </div>
+    </body>
+    <script>
+        const list = []
+        function saveToFile() {
+            const filename = prompt("Please specify file name")
+            if (filename == null) {
+                return alert('Cannot save null file')
+            }
+            pywebview.api.saveToFile(filename, list.join('\n'))
+                .then(r => {
+                    r.ok 
+                    ? alert(`TODO list has been saved to ${filename}`) 
+                    : alert(r.error)
+                })
+        }
+
+        function addListItem(name) {
+            if (!name) return
+            const ul = document.getElementById('list')
+            const li = document.getElementById('item').cloneNode(true)
+            li.innerText = name
+            li.style.visibility = 'visible'
+            ul.appendChild(li)
+            list.push(name)
+        }
+
+        function addTextItem() {
+            addListItem(document.getElementById('todo_item').value)
+            document.getElementById('todo_item').value = ""
+            document.getElementById('save-container').style.display = 'block'
+        }
+    </script>
+</html>
