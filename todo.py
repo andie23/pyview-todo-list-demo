@@ -1,9 +1,10 @@
 import webview
+from tkinter import filedialog
 
 class Api:
-    def saveToFile(self, file_name, content):
+    def saveToFile(self, content):
         try:
-            f = open(f'{file_name}.txt', "a")
+            f = filedialog.asksaveasfile(mode="w", defaultextension="txt")
             f.write(content)
             f.close()
         except Exception as error:

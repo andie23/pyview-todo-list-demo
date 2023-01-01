@@ -24,11 +24,7 @@
     <script>
         const list = []
         function saveToFile() {
-            const filename = prompt("Please specify file name")
-            if (filename == null) {
-                return alert('Cannot save null file')
-            }
-            pywebview.api.saveToFile(filename, list.join('\n'))
+            pywebview.api.saveToFile(list.join('\n'))
                 .then(r => {
                     r.ok 
                     ? alert(`TODO list has been saved to ${filename}`) 
